@@ -1,4 +1,4 @@
-import { cn } from "@utils/Util";
+import { cn } from "./../utils/Util";
 import type { UseFormRegister, FieldError, Path, FieldValues } from 'react-hook-form';
 
 interface InputProps<T extends FieldValues> {
