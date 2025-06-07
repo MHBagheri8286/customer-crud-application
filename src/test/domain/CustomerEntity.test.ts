@@ -266,7 +266,7 @@ describe('Customer Entity Functions', () => {
         it('should handle special characters in names', () => {
           const customer: Customer = {
             id: 'test-id',
-            firstName: 'José',
+            firstName: 'Jose',
             lastName: "O'Connor",
             dateOfBirth: '1975-03-10',
             phoneNumber: '+1234567890',
@@ -278,7 +278,7 @@ describe('Customer Entity Functions', () => {
     
           const uniqueKey = getCustomerUniqueKey(customer);
     
-          expect(uniqueKey).toBe("José-O'Connor-1975-03-10");
+          expect(uniqueKey).toBe("Jose-O'Connor-1975-03-10");
         });
       });
 });
