@@ -1,5 +1,5 @@
+import type { FieldError, FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import { cn } from "./../utils/Util";
-import type { UseFormRegister, FieldError, Path, FieldValues } from 'react-hook-form';
 
 interface InputProps<T extends FieldValues> {
     name: Path<T>;
@@ -11,7 +11,6 @@ interface InputProps<T extends FieldValues> {
     register: UseFormRegister<T>;
     error?: FieldError;
     className?: string;
-    inputClassName?: string;
 }
 
 export function Input<T extends FieldValues>({
@@ -24,7 +23,6 @@ export function Input<T extends FieldValues>({
     register,
     error,
     className,
-    inputClassName,
 }: InputProps<T>) {
     return (
         <div className={cn('space-y-1', className)}>
@@ -48,8 +46,7 @@ export function Input<T extends FieldValues>({
                     'disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed',
                     error
                         ? 'border-red-300 focus:ring-red-500'
-                        : 'border-gray-300',
-                    inputClassName
+                        : 'border-gray-300'
                 )}
             />
 
