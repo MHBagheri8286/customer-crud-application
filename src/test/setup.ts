@@ -12,11 +12,3 @@ Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
   writable: true,
 });
-
-// Mock crypto.randomUUID
-Object.defineProperty(globalThis, 'crypto', {
-  value: {
-    randomUUID: () => 'test-uuid-' + Math.random().toString(36).substring(2, 9),
-  },
-  writable: true,
-});
