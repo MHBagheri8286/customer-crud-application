@@ -45,7 +45,6 @@ describe('LocalStorage Customer Repository', () => {
     });
 
     it('should return all customers from localStorage', async () => {
-      // Mock customers with string dates (as they would be stored in localStorage)
       const storedCustomers = [
         {
           ...mockCustomer1,
@@ -62,7 +61,6 @@ describe('LocalStorage Customer Repository', () => {
 
       const customers = await repository.findAll();
 
-      // Expect the returned data to have string dates (as stored)
       expect(customers).toEqual(storedCustomers);
       expect(customers).toHaveLength(2);
     });
