@@ -2,7 +2,6 @@ import type { CreateCustomerData, Customer } from "../models/Customer";
 
 export const createCustomer = (data: CreateCustomerData): Customer => {
     const now = new Date();
-    console.log(data);
     
     return {
         id: crypto.randomUUID(),

@@ -9,6 +9,7 @@ export interface CustomerValidationService {
 const phoneUtil = PhoneNumberUtil.getInstance();
 
 export const validatePhoneNumber = (phoneNumber: string): boolean => {
+  try {
     const parsedNumber = phoneUtil.parse(phoneNumber);
     const numberType = phoneUtil.getNumberType(parsedNumber);
     return (
@@ -16,22 +17,34 @@ export const validatePhoneNumber = (phoneNumber: string): boolean => {
       (numberType === PhoneNumberType.MOBILE || 
        numberType === PhoneNumberType.FIXED_LINE_OR_MOBILE)
     );
+  } catch {
+    throw new Error('Invalid phone number format');
+  }
 };
 
 export const validateEmail = (email: string): boolean => {
+  if (!email) return false;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+  if (!emailRegex.test(email)) return false;
+  const [localPart, domain] = email.split('@');
+  return !localPart.includes('..') &&
+         !localPart.startsWith('.') &&
+         !localPart.endsWith('.') &&
+         !domain.startsWith('-') &&
+         !domain.endsWith('-') &&
+         !domain.includes('..');
 };
 
 export const validateBankAccountNumber = (accountNumber: string): boolean => {
-  // If empty or only whitespace, return false (validation fails)
+  // If empty or only whitespace, return false
   if (!accountNumber || accountNumber.trim() === '') {
     return false;
   }
   // Clean the account number (remove spaces and dashes)
-  const cleanAccountNumber = accountNumber.replace(/[\s-]/g, '');
-  // Check if it contains only digits
-  return /^\d+$/.test(cleanAccountNumber);
+  const cleanAccountNumber = accountNumber.replace(/[\s]/g, '');
+
+  // Check if it contains only digits AND is not empty after cleaning
+  return cleanAccountNumber.length > 0 && /^\d+$/.test(cleanAccountNumber);
 };
 
 export const createCustomerValidationService = (): CustomerValidationService => ({
