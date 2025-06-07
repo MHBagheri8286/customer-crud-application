@@ -13,7 +13,6 @@ Object.defineProperty(globalThis, 'crypto', {
     writable: true,
 });
 
-// Create a single Date spy that we'll control
 const dateConstructorSpy = vi.spyOn(global, 'Date').mockImplementation(() => mockOldDate);
 
 describe('Customer Entity Functions', () => {
