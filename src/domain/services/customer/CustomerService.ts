@@ -1,9 +1,9 @@
 import {
     createCustomer,
     updateCustomer,
-} from '../entities/Customer';
-import type { CreateCustomerData, Customer, UpdateCustomerData } from '../models/Customer';
-import type { CustomerRepository } from '../repositories/CustomerRepository';
+} from '../../entities/Customer';
+import type { CreateCustomerData, Customer, UpdateCustomerData } from '../../models/Customer';
+import type { CustomerRepository } from '../../repositories/CustomerRepository';
 import type { CustomerValidationService } from './CustomerValidationService';
 
 export interface CustomerServiceError {
@@ -32,7 +32,6 @@ export const createCustomerService = (
 
     const validateAndCreateCustomer = async (data: CreateCustomerData): Promise<CustomerServiceResult<Customer>> => {
         const errors: CustomerServiceError[] = [];
-
         // Validate phone number
         const isValidPhone = validationService.validatePhoneNumber(data.phoneNumber);
         if (!isValidPhone) {
