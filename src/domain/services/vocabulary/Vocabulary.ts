@@ -17,7 +17,7 @@ export const vocab = {
     no_customers: 'No customers found',
     save_customer: 'Save Customer',
     add_customer: 'Add New Customer',
-    update_customer: 'Edit Customer',
+    edit_customer: 'Edit Customer',
     saving: 'Saving...',
     customer_saved: 'Customer saved successfully',
     customer_deleted: 'Customer deleted successfully',
