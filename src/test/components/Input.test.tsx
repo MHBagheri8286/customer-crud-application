@@ -1,14 +1,10 @@
-// Input.test.tsx
-import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useForm, type UseFormRegister } from 'react-hook-form';
+import { describe, expect, it } from 'vitest';
 import { Input } from './../../components/Input';
 
-// Mock the cn utility
-vi.mock('@utils/Util', () => ({
-  cn: vi.fn((...classes) => classes.filter(Boolean).join(' '))
-}));
+
 
 interface TestFormData {
   username: string;
