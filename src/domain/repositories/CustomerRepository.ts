@@ -1,4 +1,4 @@
-import type { Customer } from "../models/Customer";
+import type { Customer } from "@domain/entities/Customer";
 
 export interface CustomerRepository {
     findAll(): Promise<Customer[]>;

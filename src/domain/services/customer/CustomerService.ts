@@ -1,8 +1,10 @@
 import {
     createCustomer,
     updateCustomer,
+    type CreateCustomerData,
+    type Customer,
+    type UpdateCustomerData,
 } from '../../entities/Customer';
-import type { CreateCustomerData, Customer, UpdateCustomerData } from '../../models/Customer';
 import type { CustomerRepository } from '../../repositories/CustomerRepository';
 import type { CustomerValidationService } from './CustomerValidationService';
 

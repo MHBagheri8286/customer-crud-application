@@ -1,4 +1,4 @@
-import type { CreateCustomerData, Customer, UpdateCustomerData } from "@domain/models/Customer";
+import type { CreateCustomerData, Customer, UpdateCustomerData } from "@domain/entities/Customer";
 import type { CustomerService } from "./CustomerService";
 
 export interface CustomerUseCases {

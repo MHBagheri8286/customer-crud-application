@@ -1,7 +1,7 @@
 import { CustomerForm } from '@components/customer/CustomerForm';
 import { CustomerList } from '@components/customer/CustomerList';
 import { ConfirmDialog, Modal } from '@components/index';
-import type { CreateCustomerData, Customer } from '@domain/models/Customer';
+import type { CreateCustomerData, Customer } from '@domain/entities/Customer';
 import { v } from '@domain/services/vocabulary/Vocabulary';
 import { useCustomers } from '@hooks/useCustomers';
 import React, { useState } from 'react';

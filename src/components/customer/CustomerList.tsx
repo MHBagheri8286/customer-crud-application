@@ -1,6 +1,6 @@
 import { v } from "@domain/services/vocabulary/Vocabulary";
-import type { Customer } from "../../domain/models/Customer";
 import { Button } from "../Button";
+import type { Customer } from "@domain/entities/Customer";
 
 interface CustomerListProps {
   customers: Customer[];
