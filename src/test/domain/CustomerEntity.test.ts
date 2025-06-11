@@ -1,14 +1,12 @@
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
-import { createCustomer, getCustomerUniqueKey, updateCustomer } from '../../domain/entities/Customer';
-import type { CreateCustomerData, Customer } from '../../domain/models/Customer';
+import { createCustomer, getCustomerUniqueKey, updateCustomer, type CreateCustomerData, type Customer } from '@domain/entities/Customer';
 
-// Create typed mocks
 const randomUUID = 'test-uuid-123';
 const mockRandomUUID = vi.fn(() => randomUUID);
 const mockOldDate = new Date('2024-01-01T10:30:00.000Z');
 const mockNewDate = new Date('2024-01-15T10:30:00.000Z');
-// Mock crypto with proper typing
-Object.defineProperty(globalThis, 'crypto', {
+
+Object.defineProperty(window, 'crypto', {
     value: { randomUUID: mockRandomUUID },
     writable: true,
 });
@@ -27,8 +25,6 @@ describe('Customer Entity Functions', () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
-        dateConstructorSpy.mockImplementation(() => mockOldDate);
-        mockRandomUUID.mockReturnValue(randomUUID);
     });
 
     afterAll(() => {
@@ -114,13 +110,11 @@ describe('Customer Entity Functions', () => {
                 ...existingCustomer,
                 firstName: 'Johnny',
                 email: 'johnny.doe@example.com',
-                updatedAt: mockNewDate, // Should be new date, not old date
+                updatedAt: mockNewDate,
             });
         });
 
-        it('should preserve unchanged fields', () => {
-            dateConstructorSpy.mockImplementation(() => mockNewDate);
-            
+        it('should preserve unchanged fields', () => {   
             const updateData = { firstName: 'Johnny' };
 
             const updatedCustomer = updateCustomer(existingCustomer, updateData);
@@ -134,8 +128,6 @@ describe('Customer Entity Functions', () => {
         });
 
         it('should update the updatedAt timestamp', () => {
-            dateConstructorSpy.mockImplementation(() => mockNewDate);
-            
             const updateData = { firstName: 'Johnny' };
 
             const updatedCustomer = updateCustomer(existingCustomer, updateData);
@@ -145,9 +137,7 @@ describe('Customer Entity Functions', () => {
             expect(updatedCustomer.updatedAt).not.toEqual(existingCustomer.updatedAt);
         });
 
-        it('should handle partial updates correctly', () => {
-            dateConstructorSpy.mockImplementation(() => mockNewDate);
-            
+        it('should handle partial updates correctly', () => {           
             const updateData = {
                 lastName: 'Johnson',
                 phoneNumber: '+9999999999',
@@ -161,8 +151,6 @@ describe('Customer Entity Functions', () => {
         });
 
         it('should handle empty update data', () => {
-            dateConstructorSpy.mockImplementation(() => mockNewDate);
-            
             const updatedCustomer = updateCustomer(existingCustomer, {});
 
             expect(updatedCustomer).toEqual({
@@ -171,9 +159,7 @@ describe('Customer Entity Functions', () => {
             });
         });
 
-        it('should handle all fields being updated', () => {
-            dateConstructorSpy.mockImplementation(() => mockNewDate);
-            
+        it('should handle all fields being updated', () => {   
             const updateData: Partial<CreateCustomerData> = {
                 firstName: 'Jane',
                 lastName: 'Smith',
@@ -188,7 +174,7 @@ describe('Customer Entity Functions', () => {
             expect(updatedCustomer).toEqual({
                 ...existingCustomer,
                 ...updateData,
-                updatedAt: mockNewDate, // Should be new date
+                updatedAt: mockNewDate,
             });
         });
     });

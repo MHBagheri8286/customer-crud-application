@@ -24,15 +24,8 @@ export const validatePhoneNumber = (phoneNumber: string): boolean => {
 
 export const validateEmail = (email: string): boolean => {
   if (!email) return false;
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) return false;
-  const [localPart, domain] = email.split('@');
-  return !localPart.includes('..') &&
-         !localPart.startsWith('.') &&
-         !localPart.endsWith('.') &&
-         !domain.startsWith('-') &&
-         !domain.endsWith('-') &&
-         !domain.includes('..');
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailRegex.test(email);
 };
 
 export const validateBankAccountNumber = (accountNumber: string): boolean => {

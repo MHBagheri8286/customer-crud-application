@@ -1,9 +1,8 @@
 import { CustomerForm } from '@components/customer/CustomerForm';
-import type { Customer } from '@domain/models/Customer';
+import type { Customer } from '@domain/entities/Customer';
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-// Mock all the imports
 vi.mock('@domain/services/vocabulary/Vocabulary', () => ({
     v: {
         edit_customer: 'Edit Customer',

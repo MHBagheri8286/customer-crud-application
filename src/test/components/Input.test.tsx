@@ -1,17 +1,14 @@
+import { Input } from '@components/index';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useForm, type UseFormRegister } from 'react-hook-form';
 import { describe, expect, it } from 'vitest';
-import { Input } from './../../components/Input';
-
-
 
 interface TestFormData {
   username: string;
   email: string;
 }
 
-// Simple test wrapper
 function TestWrapper({ children }: { children: (register: UseFormRegister<TestFormData>) => React.ReactNode }) {
   const { register } = useForm<TestFormData>();
   return <form>{children(register)}</form>;
