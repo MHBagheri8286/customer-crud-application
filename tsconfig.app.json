@@ -22,9 +22,9 @@
     "baseUrl": ".",
     "paths": {
       "@domain/*": ["./src/domain/*"],
-      "@components/*": ["./src/components/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@hooks/*": ["./src/hooks/*"]
+      "@components/*": ["./src/common/components/*"],
+      "@utils/*": ["./src/common/utils/*"],
+      "@hooks/*": ["./src/common/hooks/*"]
     }
   },
   "include": ["src"]

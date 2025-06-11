@@ -1,4 +1,4 @@
-import type { Customer } from "../../domain/models/Customer";
+import type { Customer } from "@domain/entities/Customer";
 import type { CustomerRepository } from "../../domain/repositories/CustomerRepository";
 
 const STORAGE_KEY = 'customers';

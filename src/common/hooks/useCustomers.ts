@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { createCustomerUseCases } from '../domain/services/customer/CustomerUseCases';
-import { createCustomerService } from '../domain/services/customer/CustomerService';
-import { createLocalStorageCustomerRepository } from '../infrastructure/storage/LocalStorageCustomerRepository';
-import type { CreateCustomerData, Customer, UpdateCustomerData } from '../domain/models/Customer';
-import { createCustomerValidationService } from '../domain/services/customer/CustomerValidationService';
+import { createCustomerUseCases } from '../../application/use-cases/CustomerUseCases';
+import { createCustomerService } from '../../domain/services/customer/CustomerService';
+import { createLocalStorageCustomerRepository } from '../../infrastructure/storage/LocalStorageCustomerRepository';
+import { createCustomerValidationService } from '../../domain/services/customer/CustomerValidationService';
+import type { CreateCustomerData, Customer, UpdateCustomerData } from '@domain/entities/Customer';
 
 export interface UseCustomersHook {
     customers: Customer[];

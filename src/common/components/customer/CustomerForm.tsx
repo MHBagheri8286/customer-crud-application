@@ -1,13 +1,13 @@
 import { validatePhoneNumber } from '@domain/services/customer/CustomerValidationService';
 import { v } from '@domain/services/vocabulary/Vocabulary';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { nameof } from '@utils/Util';
 import { useEffect, type FC } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Button } from '../Button';
 import { Input } from '../Input';
 import type { Customer, CreateCustomerData } from '@domain/entities/Customer';
+import { nameof } from '@utils/Util';
 
 const CustomerFormSchema = yup.object({
     firstName: yup.string().required('First name is required').max(50),
