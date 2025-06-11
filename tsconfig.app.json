@@ -22,6 +22,8 @@
     "baseUrl": ".",
     "paths": {
       "@domain/*": ["./src/domain/*"],
+      "@application/*": ["./src/application/*"],
+      "@infrastructure/*": ["./src/infrastructure/*"],
       "@components/*": ["./src/common/components/*"],
       "@utils/*": ["./src/common/utils/*"],
       "@hooks/*": ["./src/common/hooks/*"]

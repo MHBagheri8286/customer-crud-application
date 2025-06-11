@@ -1,5 +1,5 @@
 import type { CreateCustomerData, Customer, UpdateCustomerData } from "@domain/entities/Customer";
-import type { CustomerService } from "./CustomerService";
+import type { CustomerService } from "@domain/services/customer/CustomerService";
 
 export interface CustomerUseCases {
   createCustomer(data: CreateCustomerData): Promise<{ success: boolean; customer?: Customer; errors?: Array<{ field: string; message: string }> }>;
