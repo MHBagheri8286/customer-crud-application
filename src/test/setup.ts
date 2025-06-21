@@ -12,8 +12,3 @@ Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
   writable: true,
 });
-
-vi.mock('@utils/Util', () => ({
-  cn: vi.fn((...classes) => classes.filter(Boolean).join(' ')),
-  nameof: vi.fn((key: string) => key)
-}));

@@ -7,3 +7,15 @@ export function nameof(key1: unknown, key2?: unknown): unknown {
 export function cn(...classes: (string | undefined | null | boolean)[]): string {
     return classes.filter(Boolean).join(' ');
 }
+
+export function debounce<T extends unknown[]>(fn: (...args: T) => void, delay: number) {
+    let timer: NodeJS.Timeout | null = null;
+
+    return (...arg: T) => {
+        if(timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+            fn(...arg);
+        }, delay)
+    }
+
+}

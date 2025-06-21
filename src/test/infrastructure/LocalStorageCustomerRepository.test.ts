@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import type { Customer } from '@domain/models/Customer';
 import { createLocalStorageCustomerRepository } from './../../infrastructure/storage/LocalStorageCustomerRepository';
+import type { Customer } from '@domain/entities/Customer';
 
 describe('LocalStorage Customer Repository', () => {
   let repository: ReturnType<typeof createLocalStorageCustomerRepository>;
