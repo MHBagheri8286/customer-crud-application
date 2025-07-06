@@ -1,6 +1,5 @@
 import { SearchInput, type SearchInputProps } from '@components/SearchInput';
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock the debounce utility
@@ -32,7 +31,7 @@ describe('SearchInput', () => {
     });
 
     afterEach(() => {
-        vi.useRealTimers();
+        //vi.useRealTimers();
     });
 
     //   describe('Rendering', () => {
@@ -108,62 +107,56 @@ describe('SearchInput', () => {
             render(<SearchInput {...defaultProps} onResults={onResults} />);
             const input = screen.getByPlaceholderText('...Search');
 
-            await userEvent.type(input, 'app')
+            fireEvent.change(input, { target: { value: 'app' } });
 
-            vi.advanceTimersByTime(300);
-            await waitFor(() => {
-                expect(onResults).toHaveBeenCalledWith(mockResults);
-            }, { timeout: 1000 });
+
+            await vi.advanceTimersByTimeAsync(300);
+            expect(onResults).toHaveBeenCalledWith(mockResults);
         });
 
-        // it('constructs correct search URL with encoded query', async () => {
-        //   mockFetch.mockResolvedValueOnce({
-        //     ok: true,
-        //     json: () => Promise.resolve([]),
-        //   });
+        it('constructs correct search URL with encoded query', async () => {
+            mockFetch.mockResolvedValueOnce({
+                ok: true,
+                json: () => Promise.resolve([]),
+            });
 
-        //   render(<SearchInput {...defaultProps} />);
-        //   const input = screen.getByPlaceholderText('...Search');
+            render(<SearchInput {...defaultProps} />);
+            const input = screen.getByPlaceholderText('...Search');
 
-        //   fireEvent.change(input, { target: { value: 'test with spaces & symbols' } });
-        //   vi.advanceTimersByTime(300);
+            fireEvent.change(input, { target: { value: 'test with spaces & symbols' } });
+            await vi.advanceTimersByTimeAsync(300);
+            expect(mockFetch).toHaveBeenCalledWith(
+                'https://api.example.com/search?q=test%20with%20spaces%20%26%20symbols',
+                expect.objectContaining({
+                    signal: expect.any(AbortSignal),
+                })
+            );
+        });
 
-        //   await waitFor(() => {
-        //     expect(mockFetch).toHaveBeenCalledWith(
-        //       'https://api.example.com/search?q=test%20with%20spaces%20%26%20symbols',
-        //       expect.objectContaining({
-        //         signal: expect.any(AbortSignal),
-        //       })
-        //     );
-        //   });
-        // });
+        it('debounces search requests', async () => {
+            mockFetch.mockResolvedValue({
+                ok: true,
+                json: () => Promise.resolve([]),
+            });
 
-        // it('debounces search requests', async () => {
-        //   mockFetch.mockResolvedValue({
-        //     ok: true,
-        //     json: () => Promise.resolve([]),
-        //   });
+            render(<SearchInput {...defaultProps} debounce={500} />);
+            const input = screen.getByPlaceholderText('...Search');
 
-        //   render(<SearchInput {...defaultProps} debounce={500} />);
-        //   const input = screen.getByPlaceholderText('...Search');
+            // Type multiple characters quickly
+            fireEvent.change(input, { target: { value: 't' } });
+            fireEvent.change(input, { target: { value: 'te' } });
+            fireEvent.change(input, { target: { value: 'tes' } });
+            fireEvent.change(input, { target: { value: 'test' } });
 
-        //   // Type multiple characters quickly
-        //   fireEvent.change(input, { target: { value: 't' } });
-        //   fireEvent.change(input, { target: { value: 'te' } });
-        //   fireEvent.change(input, { target: { value: 'tes' } });
-        //   fireEvent.change(input, { target: { value: 'test' } });
+            // Advance time but not past debounce delay
+            await vi.advanceTimersByTimeAsync(400);
+            expect(mockFetch).not.toHaveBeenCalled();
 
-        //   // Advance time but not past debounce delay
-        //   vi.advanceTimersByTime(400);
-        //   expect(mockFetch).not.toHaveBeenCalled();
+            // Advance past debounce delay
+            await vi.advanceTimersByTimeAsync(100);
 
-        //   // Advance past debounce delay
-        //   vi.advanceTimersByTime(100);
-
-        //   await waitFor(() => {
-        //     expect(mockFetch).toHaveBeenCalledTimes(1);
-        //   });
-        // });
+            expect(mockFetch).toHaveBeenCalledTimes(1);
+        });
 
         // it('does not search for empty or whitespace-only queries', async () => {
         //   render(<SearchInput {...defaultProps} />);

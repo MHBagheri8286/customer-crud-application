@@ -1,10 +1,16 @@
-import { CustomerForm } from '@components/customer/CustomerForm';
-import { CustomerList } from '@components/customer/CustomerList';
 import { ConfirmDialog, Modal } from '@components/index';
 import type { CreateCustomerData, Customer } from '@domain/entities/Customer';
 import { v } from '@domain/services/vocabulary/Vocabulary';
 import { useCustomers } from '@hooks/useCustomers';
-import React, { useState } from 'react';
+import React, { lazy, useState } from 'react';
+
+const CustomerList = lazy(()=> import('./common/components/customer/CustomerList').then((module)=> ({
+  default: module.CustomerList
+})))
+
+const CustomerForm = lazy(()=> import('./common/components/customer/CustomerForm').then((module)=> ({
+  default: module.CustomerForm
+})))
 
 enum ViewMode {
   LIST = 'list',

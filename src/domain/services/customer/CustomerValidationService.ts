@@ -1,22 +1,13 @@
-import { PhoneNumberUtil, PhoneNumberType } from 'google-libphonenumber';
-
+import { isValidPhoneNumber } from 'libphonenumber-js/min';
 export interface CustomerValidationService {
-    validatePhoneNumber(phoneNumber: string): boolean;
-    validateEmail(email: string): boolean;
-    validateBankAccountNumber(accountNumber: string): boolean;
-  }
-
-const phoneUtil = PhoneNumberUtil.getInstance();
+  validatePhoneNumber(phoneNumber: string): boolean;
+  validateEmail(email: string): boolean;
+  validateBankAccountNumber(accountNumber: string): boolean;
+}
 
 export const validatePhoneNumber = (phoneNumber: string): boolean => {
   try {
-    const parsedNumber = phoneUtil.parse(phoneNumber);
-    const numberType = phoneUtil.getNumberType(parsedNumber);
-    return (
-      phoneUtil.isValidNumber(parsedNumber) &&
-      (numberType === PhoneNumberType.MOBILE || 
-       numberType === PhoneNumberType.FIXED_LINE_OR_MOBILE)
-    );
+    return isValidPhoneNumber(phoneNumber);
   } catch {
     throw new Error('Invalid phone number format');
   }
@@ -40,8 +31,9 @@ export const validateBankAccountNumber = (accountNumber: string): boolean => {
   return cleanAccountNumber.length > 0 && /^\d+$/.test(cleanAccountNumber);
 };
 
-export const createCustomerValidationService = (): CustomerValidationService => ({
-  validatePhoneNumber,
-  validateEmail,
-  validateBankAccountNumber,
-});
+export const createCustomerValidationService =
+  (): CustomerValidationService => ({
+    validatePhoneNumber,
+    validateEmail,
+    validateBankAccountNumber,
+  });
