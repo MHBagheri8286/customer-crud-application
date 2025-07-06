@@ -1,10 +1,11 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
 import path from 'path';
+import { visualizer } from 'rollup-plugin-visualizer';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(),],
+  plugins: [react(), tailwindcss(), visualizer({ open: false })],
   resolve: {
     alias: {
       '@domain': path.resolve(__dirname, './src/domain'),
@@ -21,6 +22,16 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    sourcemap: true,
-  }
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom'],
+          yupResolver: ['@hookform/resolvers/yup'],
+          isValidPhoneNumber: ['libphonenumber-js/min'],
+        },
+      },
+    },
+    sourcemap: false,
+    chunkSizeWarningLimit: 500,
+  },
 });
