@@ -1,14 +1,15 @@
 import { ConfirmDialog, Modal } from '@components/index';
+import { SearchInput } from '@components/SearchInput';
 import type { CreateCustomerData, Customer } from '@domain/entities/Customer';
 import { v } from '@domain/services/vocabulary/Vocabulary';
 import { useCustomers } from '@hooks/useCustomers';
 import React, { lazy, useState } from 'react';
 
-const CustomerList = lazy(()=> import('./common/components/customer/CustomerList').then((module)=> ({
+const CustomerList = lazy(() => import('./common/components/customer/CustomerList').then((module) => ({
   default: module.CustomerList
 })))
 
-const CustomerForm = lazy(()=> import('./common/components/customer/CustomerForm').then((module)=> ({
+const CustomerForm = lazy(() => import('./common/components/customer/CustomerForm').then((module) => ({
   default: module.CustomerForm
 })))
 
@@ -106,6 +107,9 @@ const App: React.FC = () => {
               onDelete={handleDeleteCustomer}
               isLoading={isLoading}
             />
+            <SearchInput debounce={500} onResults={function (value: unknown[]): void {
+              console.log(value);
+            }} searchUrl={''} />
           </>
         )}
         <Modal
